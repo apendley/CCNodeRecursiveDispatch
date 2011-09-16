@@ -31,17 +31,17 @@ typedef void (*CCDispatchParamImp)(id, SEL, CCNode*, void*);
 
 @implementation CCNode(RecursiveDispatch)
 
--(void)makeDescendentsPerformSelector:(SEL)selector
+-(void)makeDescendantsPerformSelector:(SEL)selector
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
 	{
 		[child performSelector:selector];
-		[child makeDescendentsPerformSelector:selector];
+		[child makeDescendantsPerformSelector:selector];
 	}	
 }
 
--(void)makeDescendentsPerformSelector:(SEL)selector predicate:(CCPredicateFn)predicate
+-(void)makeDescendantsPerformSelector:(SEL)selector predicate:(CCPredicateFn)predicate
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
@@ -49,11 +49,11 @@ typedef void (*CCDispatchParamImp)(id, SEL, CCNode*, void*);
 		if( predicate(child) )
 			[child performSelector:selector];
 		
-		[child makeDescendentsPerformSelector:selector predicate:predicate];
+		[child makeDescendantsPerformSelector:selector predicate:predicate];
 	}	
 }
 
--(void)makeDescendentsPerformSelector:(SEL)selector target:(id)target predicateSelector:(SEL)predicateSelector
+-(void)makeDescendantsPerformSelector:(SEL)selector target:(id)target predicateSelector:(SEL)predicateSelector
 {
 	CCPredicateImp predicateImp = (CCPredicateImp)[target methodForSelector:predicateSelector];	
 	
@@ -63,21 +63,21 @@ typedef void (*CCDispatchParamImp)(id, SEL, CCNode*, void*);
 		if( predicateImp(target, predicateSelector, child) )
 			[child performSelector:selector];
 		
-		[child makeDescendentsPerformSelector:selector target:target predicateSelector:predicateSelector];
+		[child makeDescendantsPerformSelector:selector target:target predicateSelector:predicateSelector];
 	}	
 }
 
--(void)makeDescendentsPerformSelector:(SEL)selector withObject:(id)object
+-(void)makeDescendantsPerformSelector:(SEL)selector withObject:(id)object
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
 	{
 		[child performSelector:selector withObject:object];
-		[child makeDescendentsPerformSelector:selector withObject:object];
+		[child makeDescendantsPerformSelector:selector withObject:object];
 	}	
 }
 
--(void)makeDescendentsPerformSelector:(SEL)selector withObject:(id)object predicate:(CCPredicateFn)predicate
+-(void)makeDescendantsPerformSelector:(SEL)selector withObject:(id)object predicate:(CCPredicateFn)predicate
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
@@ -85,11 +85,11 @@ typedef void (*CCDispatchParamImp)(id, SEL, CCNode*, void*);
 		if( predicate(child) )
 			[child performSelector:selector withObject:object];
 		
-		[child makeDescendentsPerformSelector:selector withObject:object predicate:predicate];
+		[child makeDescendantsPerformSelector:selector withObject:object predicate:predicate];
 	}	
 }
 
--(void)makeDescendentsPerformSelector:(SEL)selector withObject:(id)object predicateTarget:(id)target predicateSelector:(SEL)predicateSelector
+-(void)makeDescendantsPerformSelector:(SEL)selector withObject:(id)object predicateTarget:(id)target predicateSelector:(SEL)predicateSelector
 {
 	CCPredicateImp predicateImp = (CCPredicateImp)[target methodForSelector:predicateSelector];	
 	
@@ -99,21 +99,21 @@ typedef void (*CCDispatchParamImp)(id, SEL, CCNode*, void*);
 		if( predicateImp(target, predicateSelector, child) )
 			[child performSelector:selector withObject:object];
 		
-		[child makeDescendentsPerformSelector:selector withObject:object predicateTarget:target predicateSelector:predicateSelector];
+		[child makeDescendantsPerformSelector:selector withObject:object predicateTarget:target predicateSelector:predicateSelector];
 	}	
 }
 
--(void)makeDescendentsRunAction:(CCAction*)action;
+-(void)makeDescendantsRunAction:(CCAction*)action;
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
 	{
 		[child runAction:[[action copy] autorelease]];
-		[child makeDescendentsRunAction:action];
+		[child makeDescendantsRunAction:action];
 	}	
 }
 
--(void)makeDescendentsRunAction:(CCAction*)action predicate:(CCPredicateFn)predicate
+-(void)makeDescendantsRunAction:(CCAction*)action predicate:(CCPredicateFn)predicate
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
@@ -121,11 +121,11 @@ typedef void (*CCDispatchParamImp)(id, SEL, CCNode*, void*);
 		if( predicate(child) )			
 			[child runAction:[[action copy] autorelease]];
 		
-		[child makeDescendentsRunAction:action predicate:predicate];
+		[child makeDescendantsRunAction:action predicate:predicate];
 	}	
 }
 
--(void)makeDescendentsRunAction:(CCAction*)action predicateTarget:(id)target predicateSelector:(SEL)predicateSelector
+-(void)makeDescendantsRunAction:(CCAction*)action predicateTarget:(id)target predicateSelector:(SEL)predicateSelector
 {
 	CCPredicateImp predicateImp = (CCPredicateImp)[target methodForSelector:predicateSelector];	
 	
@@ -135,61 +135,61 @@ typedef void (*CCDispatchParamImp)(id, SEL, CCNode*, void*);
 		if( predicateImp(target, predicateSelector, child) )
 			[child runAction:[[action copy] autorelease]];
 		
-		[child makeDescendentsRunAction:action predicateTarget:target predicateSelector:predicateSelector];
+		[child makeDescendantsRunAction:action predicateTarget:target predicateSelector:predicateSelector];
 	}	
 }
 
--(void)visitDescendents:(CCDispatchFn)function
+-(void)visitDescendants:(CCDispatchFn)function
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
 	{
 		function(child);
-		[child visitDescendents:function];
+		[child visitDescendants:function];
 	}	
 }
 
--(void)visitDescendents:(CCDispatchObjParam)function withObject:(id)object
+-(void)visitDescendants:(CCDispatchObjParam)function withObject:(id)object
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
 	{
 		function(child, object);
-		[child visitDescendents:function withObject:object];
+		[child visitDescendants:function withObject:object];
 	}	
 }
 
--(void)visitDescendents:(CCDispatchDataParam)function withData:(void*)data
+-(void)visitDescendants:(CCDispatchDataParam)function withData:(void*)data
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
 	{
 		function(child, data);
-		[child visitDescendents:function withData:data];
+		[child visitDescendants:function withData:data];
 	}	
 }
 
--(void)visitDescendentsUsingTarget:(id)target selector:(SEL)selector
+-(void)visitDescendantsUsingTarget:(id)target selector:(SEL)selector
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
 	{
 		[target performSelector:selector withObject:child];
-		[child visitDescendentsUsingTarget:target selector:selector];
+		[child visitDescendantsUsingTarget:target selector:selector];
 	}	
 }
 
--(void)visitDescendentsUsingTarget:(id)target selector:(SEL)selector withObject:(id)object
+-(void)visitDescendantsUsingTarget:(id)target selector:(SEL)selector withObject:(id)object
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
 	{
 		[target performSelector:selector withObject:child withObject:object];
-		[child visitDescendentsUsingTarget:target selector:selector withObject:object];
+		[child visitDescendantsUsingTarget:target selector:selector withObject:object];
 	}	
 }
 
--(void)visitDescendentsUsingTarget:(id)target selector:(SEL)selector withData:(void*)data
+-(void)visitDescendantsUsingTarget:(id)target selector:(SEL)selector withData:(void*)data
 {
 	CCDispatchParamImp dispatchImp = (CCDispatchParamImp)[target methodForSelector:selector];	
 	
@@ -197,13 +197,13 @@ typedef void (*CCDispatchParamImp)(id, SEL, CCNode*, void*);
 	CCARRAY_FOREACH(self.children, child)
 	{
 		dispatchImp(target, selector, child, data);
-		[child visitDescendentsUsingTarget:target selector:selector withData:data];
+		[child visitDescendantsUsingTarget:target selector:selector withData:data];
 	}	
 }
 
 #if NS_BLOCKS_AVAILABLE
 
--(void)makeDescendentsPerformSelector:(SEL)selector predicateBlock:(CCPredicateBlock)predicate
+-(void)makeDescendantsPerformSelector:(SEL)selector predicateBlock:(CCPredicateBlock)predicate
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
@@ -211,11 +211,11 @@ typedef void (*CCDispatchParamImp)(id, SEL, CCNode*, void*);
 		if( predicate(child) )
 			[child performSelector:selector];
 		
-		[child makeDescendentsPerformSelector:selector predicateBlock:predicate];
+		[child makeDescendantsPerformSelector:selector predicateBlock:predicate];
 	}	
 }
 
--(void)makeDescendentsPerformSelector:(SEL)selector withObject:(id)object predicateBlock:(CCPredicateBlock)predicate
+-(void)makeDescendantsPerformSelector:(SEL)selector withObject:(id)object predicateBlock:(CCPredicateBlock)predicate
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
@@ -223,11 +223,11 @@ typedef void (*CCDispatchParamImp)(id, SEL, CCNode*, void*);
 		if( predicate(child) )
 			[child performSelector:selector withObject:object];
 		
-		[child makeDescendentsPerformSelector:selector withObject:object predicateBlock:predicate];
+		[child makeDescendantsPerformSelector:selector withObject:object predicateBlock:predicate];
 	}	
 }
 
--(void)makeDescendentsRunAction:(CCAction*)action predicateBlock:(CCPredicateBlock)predicate
+-(void)makeDescendantsRunAction:(CCAction*)action predicateBlock:(CCPredicateBlock)predicate
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
@@ -235,17 +235,17 @@ typedef void (*CCDispatchParamImp)(id, SEL, CCNode*, void*);
 		if( predicate(child) )			
 			[child runAction:[[action copy] autorelease]];
 		
-		[child makeDescendentsRunAction:action predicateBlock:predicate];
+		[child makeDescendantsRunAction:action predicateBlock:predicate];
 	}	
 }
 
--(void)visitDescendentsUsingBlock:(CCDispatchBlock)block
+-(void)visitDescendantsUsingBlock:(CCDispatchBlock)block
 {
 	CCNode* child;
 	CCARRAY_FOREACH(self.children, child)
 	{
 		block(child);
-		[child visitDescendentsUsingBlock:block];
+		[child visitDescendantsUsingBlock:block];
 	}	
 }
 

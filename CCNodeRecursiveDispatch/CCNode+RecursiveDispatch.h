@@ -34,37 +34,37 @@ typedef void (*CCDispatchObjParam)(CCNode*, id);
 typedef void (*CCDispatchDataParam)(CCNode*, void*);
 typedef BOOL (*CCPredicateFn)(CCNode*);
 
--(void)makeDescendentsPerformSelector:(SEL)selector;
--(void)makeDescendentsPerformSelector:(SEL)selector predicate:(CCPredicateFn)predicate;
--(void)makeDescendentsPerformSelector:(SEL)selector target:(id)target predicateSelector:(SEL)predicateSelector;
+-(void)makeDescendantsPerformSelector:(SEL)selector;
+-(void)makeDescendantsPerformSelector:(SEL)selector predicate:(CCPredicateFn)predicate;
+-(void)makeDescendantsPerformSelector:(SEL)selector target:(id)target predicateSelector:(SEL)predicateSelector;
 
--(void)makeDescendentsPerformSelector:(SEL)selector withObject:(id)object;
--(void)makeDescendentsPerformSelector:(SEL)selector withObject:(id)object predicate:(CCPredicateFn)predicate;
--(void)makeDescendentsPerformSelector:(SEL)selector withObject:(id)object predicateTarget:(id)target predicateSelector:(SEL)predicateSelector;
+-(void)makeDescendantsPerformSelector:(SEL)selector withObject:(id)object;
+-(void)makeDescendantsPerformSelector:(SEL)selector withObject:(id)object predicate:(CCPredicateFn)predicate;
+-(void)makeDescendantsPerformSelector:(SEL)selector withObject:(id)object predicateTarget:(id)target predicateSelector:(SEL)predicateSelector;
 
--(void)makeDescendentsRunAction:(CCAction*)action;
--(void)makeDescendentsRunAction:(CCAction*)action predicate:(CCPredicateFn)predicate;
--(void)makeDescendentsRunAction:(CCAction*)action predicateTarget:(id)target predicateSelector:(SEL)predicateSelector;
+-(void)makeDescendantsRunAction:(CCAction*)action;
+-(void)makeDescendantsRunAction:(CCAction*)action predicate:(CCPredicateFn)predicate;
+-(void)makeDescendantsRunAction:(CCAction*)action predicateTarget:(id)target predicateSelector:(SEL)predicateSelector;
 
--(void)visitDescendents:(CCDispatchFn)function;
--(void)visitDescendents:(CCDispatchObjParam)function withObject:(id)object;
--(void)visitDescendents:(CCDispatchDataParam)function withData:(void*)data;
+-(void)visitDescendants:(CCDispatchFn)function;
+-(void)visitDescendants:(CCDispatchObjParam)function withObject:(id)object;
+-(void)visitDescendants:(CCDispatchDataParam)function withData:(void*)data;
 
--(void)visitDescendentsUsingTarget:(id)target selector:(SEL)selector;
--(void)visitDescendentsUsingTarget:(id)target selector:(SEL)selector withObject:(id)object;
--(void)visitDescendentsUsingTarget:(id)target selector:(SEL)selector withData:(void*)data;
+-(void)visitDescendantsUsingTarget:(id)target selector:(SEL)selector;
+-(void)visitDescendantsUsingTarget:(id)target selector:(SEL)selector withObject:(id)object;
+-(void)visitDescendantsUsingTarget:(id)target selector:(SEL)selector withData:(void*)data;
 
 #if NS_BLOCKS_AVAILABLE
 
 typedef void (^CCDispatchBlock)(CCNode*);
 typedef BOOL (^CCPredicateBlock)(CCNode*);
 
--(void)makeDescendentsPerformSelector:(SEL)selector predicateBlock:(CCPredicateBlock)predicate;
--(void)makeDescendentsPerformSelector:(SEL)selector withObject:(id)object predicateBlock:(CCPredicateBlock)predicate;
+-(void)makeDescendantsPerformSelector:(SEL)selector predicateBlock:(CCPredicateBlock)predicate;
+-(void)makeDescendantsPerformSelector:(SEL)selector withObject:(id)object predicateBlock:(CCPredicateBlock)predicate;
 
--(void)makeDescendentsRunAction:(CCAction*)action predicateBlock:(CCPredicateBlock)predicate;
+-(void)makeDescendantsRunAction:(CCAction*)action predicateBlock:(CCPredicateBlock)predicate;
 
--(void)visitDescendentsUsingBlock:(CCDispatchBlock)block;
+-(void)visitDescendantsUsingBlock:(CCDispatchBlock)block;
 
 #endif
 
