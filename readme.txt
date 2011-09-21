@@ -113,7 +113,10 @@ void mergeBoundingBox(CCNode* node, void* data)
 
 -(CGRect)aggregateBoundingBoxForNode:(CCNode*)node
 {
-	CGRect boundingBox = CGRectZero;	
+	__block CGRect boundingBox;
+	boundingBox.origin = CGPointZero;
+	boundingBox.size = node.contentSize;
+	
 	[self visitDescendants:mergeBoundingBox withData:&boundingBox];
 	return boundingBox;
 }
@@ -122,10 +125,12 @@ ex: create an aggregated bounding box using the bounding box of all of a node's 
 
 -(CGRect)aggregateBoundingBoxForNode:(CCNode*)node
 {
-	__block CGRect boundingBox = CGRectZero;
+	__block CGRect boundingBox;
+	boundingBox.origin = CGPointZero;
+	boundingBox.size = node.contentSize;
 	
-	[self visitDescendantsUsingBlock:^(CCNode* node) {
-		boundingBox = CGRectUnion(boundingBox, node.boundingBox);
+	[self visitDescendantsUsingBlock:^(CCNode* n) {
+		boundingBox = CGRectUnion(boundingBox, n.boundingBox);
 	}];
 	
 	return boundingBox;
