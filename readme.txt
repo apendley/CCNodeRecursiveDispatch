@@ -103,7 +103,22 @@ ex: overriding setOpacity: on subclassed node conforming to CCRGBAProtocol (e.g.
 	}];
 }
 
-ex: create an aggregated bounding box using the bounding box of all of a node's descendents
+ex: create an aggregated bounding box using the bounding box of all of a node's descendents using a function as a visitor
+
+void mergeBoundingBox(CCNode* node, void* data)
+{
+	CGRect* pRect = (CGRect*)data;	
+	*pRect = CGRectUnion(*pRect, node.boundingBox);
+}
+
+-(CGRect)aggregateBoundingBoxForNode:(CCNode*)node
+{
+	CGRect boundingBox = CGRectZero;	
+	[self visitDescendants:mergeBoundingBox withData:&boundingBox];
+	return boundingBox;
+}
+
+ex: create an aggregated bounding box using the bounding box of all of a node's descendents using a block as a visitor
 
 -(CGRect)aggregateBoundingBoxForNode:(CCNode*)node
 {
