@@ -113,7 +113,7 @@ void mergeBoundingBox(CCNode* node, void* data)
 
 -(CGRect)aggregateBoundingBoxForNode:(CCNode*)node
 {
-	__block CGRect boundingBox;
+	CGRect boundingBox;
 	boundingBox.origin = CGPointZero;
 	boundingBox.size = node.contentSize;
 	
