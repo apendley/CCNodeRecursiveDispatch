@@ -103,6 +103,19 @@ ex: overriding setOpacity: on subclassed node conforming to CCRGBAProtocol (e.g.
 	}];
 }
 
+ex: create an aggregated bounding box using the bounding box of all of a node's descendents
+
+-(CGRect)aggregateBoundingBoxForNode:(CCNode*)node
+{
+	__block CGRect boundingBox = CGRectZero;
+	
+	[self visitDescendantsUsingBlock:^(CCNode* node) {
+		boundingBox = CGRectUnion(boundingBox, node.boundingBox);
+	}];
+	
+	return boundingBox;
+}
+
 ex: pause scheduling and actions for a node and all descendants using makeDescendantsPerformSelector
 
 void pauseNodeAndDescendants(CCNode* node)
