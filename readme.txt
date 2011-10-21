@@ -117,7 +117,7 @@ void mergeBoundingBox(CCNode* node, void* data)
 	boundingBox.origin = CGPointZero;
 	boundingBox.size = node.contentSize;
 	
-	[self visitDescendants:mergeBoundingBox withData:&boundingBox];
+	[node visitDescendants:mergeBoundingBox withData:&boundingBox];
 	return boundingBox;
 }
 
@@ -129,7 +129,7 @@ ex: create an aggregated bounding box using the bounding box of all of a node's 
 	boundingBox.origin = CGPointZero;
 	boundingBox.size = node.contentSize;
 	
-	[self visitDescendantsUsingBlock:^(CCNode* n) {
+	[node visitDescendantsUsingBlock:^(CCNode* n) {
 		boundingBox = CGRectUnion(boundingBox, n.boundingBox);
 	}];
 	
